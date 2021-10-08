@@ -3,9 +3,14 @@ let url = "https://api.twitch.tv/helix/streams";
 
 const form = document.querySelector(".searchForm");
 const resultList = document.querySelector(".streams");
+const nextBtn = document.querySelector(".nextButton");
+const prevBtn = document.querySelector(".prevButton");
 let gameID = '';
+let cursorPagination = '';
 
 form.addEventListener("submit", handleSubmit);
+nextBtn.addEventListener("click", getNext);
+prevBtn.addEventListener("click", getPrevious);
 
 function handleSubmit(e) {
     e.preventDefault();
@@ -15,6 +20,18 @@ function handleSubmit(e) {
         console.log('result', result.data[0].id);
         fetchGameStreams(result.data[0].id);
     })
+}
+
+function getNext(e) {
+    e.preventDefault();
+    document.querySelectorAll(".streamContainer").forEach(e => e.remove());
+    fetchGameStreams('', cursorPagination);
+}
+
+function getPrevious(e) {
+    e.preventDefault();
+    document.querySelectorAll(".streamContainer").forEach(e => e.remove());
+    fetchGameStreams('', '', cursorPagination);
 }
 
 function cropImage(imageUrl) {
@@ -32,6 +49,7 @@ function createUI(element, attributes) {
     return resultElement;
 }
 
+
 async function getGameID(gameName) {
     const apiResponse = await fetch(
         `https://api.twitch.tv/helix/games?name=${gameName}`,
@@ -46,9 +64,10 @@ async function getGameID(gameName) {
     return gameData;
 }
 
-async function fetchGameStreams(id = "") {
+async function fetchGameStreams(id = "", next="", prev="") {
     if (id !== "") url = `https://api.twitch.tv/helix/streams?game_id=${id}`;
-    console.log(url);
+    if (next !== "") url = `https://api.twitch.tv/helix/streams?first=20&after=${next}`
+    if (prev !== "") url = `https://api.twitch.tv/helix/streams?first=20&before=${next}`
     const apiResponse = await fetch(url, {
         headers: {
             Authorization: "Bearer 49yr7fhslyosgay4x5qp5vrowbnw5w",
@@ -56,8 +75,9 @@ async function fetchGameStreams(id = "") {
         },
     });
     const streamData = apiResponse.json();
-    console.log(streamData);
     streamData.then((data) => {
+        console.log(data);
+        cursorPagination = data.pagination.cursor;
         data.data.forEach((stream) => {
             const streamTitle = stream.title;
             const streamViewers = stream.viewer_count;
@@ -79,8 +99,8 @@ async function fetchGameStreams(id = "") {
             const description = createUI("li", { class: "streamDescription" });
             const user = createUI("li", { class: "streamUser" });
             const streamUrl = `https://www.twitch.tv/${streamUser}`
-            const linkStream = createUI("a", {class: "link", href: streamUrl, rel: streamUrl+ '/embed'})
-            console.log(linkStream);
+            const linkStream = createUI("a", {class: "link", href: streamUrl, rel: streamUrl+ '/embed', target: "_blank"})
+            
             titleHeader.innerText = streamTitle;
             info.innerText = streamGameAndViewers;
             user.innerText = streamUser;
