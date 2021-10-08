@@ -14,29 +14,33 @@ prevBtn.addEventListener("click", getPrevious);
 
 function handleSubmit(e) {
     e.preventDefault();
-    document.querySelectorAll(".streamContainer").forEach(e => e.remove());
+    document.querySelectorAll(".streamContainer").forEach((e) => e.remove());
     const gameName = document.querySelector(".searchInput").value;
-    getGameID(gameName).then(result => {
-        gameID = result.data[0].id
+    getGameID(gameName).then((result) => {
+        gameID = result.data[0].id;
         url = `https://api.twitch.tv/helix/streams?game_id=${gameID}`;
         fetchGameStreams();
-    })
+    });
     document.querySelector(".searchInput").value = "";
 }
 
 function getNext(e) {
     e.preventDefault();
-    document.querySelectorAll(".streamContainer").forEach(e => e.remove());
-    if (gameID === '') url = `https://api.twitch.tv/helix/streams?first=20&after=${cursorPagination}`;
-    else if (gameID !== '') url = `https://api.twitch.tv/helix/streams?game_id=${gameID}&first=20&after=${cursorPagination}`;
+    document.querySelectorAll(".streamContainer").forEach((e) => e.remove());
+    if (gameID === "")
+        url = `https://api.twitch.tv/helix/streams?first=20&after=${cursorPagination}`;
+    else if (gameID !== "")
+        url = `https://api.twitch.tv/helix/streams?game_id=${gameID}&first=20&after=${cursorPagination}`;
     fetchGameStreams();
 }
 
 function getPrevious(e) {
     e.preventDefault();
-    document.querySelectorAll(".streamContainer").forEach(e => e.remove());
-    if (gameID === '') url = `https://api.twitch.tv/helix/streams?first=20&before=${cursorPagination}`;
-    else if (gameID !== '') url = `https://api.twitch.tv/helix/streams?game_id=${gameID}&before=${cursorPagination}`;
+    document.querySelectorAll(".streamContainer").forEach((e) => e.remove());
+    if (gameID === "")
+        url = `https://api.twitch.tv/helix/streams?first=20&before=${cursorPagination}`;
+    else if (gameID !== "")
+        url = `https://api.twitch.tv/helix/streams?game_id=${gameID}&first=20&before=${cursorPagination}`;
     fetchGameStreams();
 }
 
@@ -54,7 +58,6 @@ function createUI(element, attributes) {
     }
     return resultElement;
 }
-
 
 async function getGameID(gameName) {
     const apiResponse = await fetch(
@@ -79,9 +82,8 @@ async function fetchGameStreams() {
     });
     const streamData = apiResponse.json();
     streamData.then((data) => {
-        
         cursorPagination = data.pagination.cursor;
-        
+
         data.data.forEach((stream) => {
             const streamTitle = stream.title;
             const streamViewers = stream.viewer_count;
@@ -93,7 +95,7 @@ async function fetchGameStreams() {
 
             const imageContainer = createUI("ul", { class: "imageContainer" });
             const thumbnail = createUI("img");
-            
+
             thumbnail.src = streamImg;
 
             const containerDiv = createUI("div", { class: "streamContainer" });
@@ -102,9 +104,14 @@ async function fetchGameStreams() {
             const info = createUI("li", { class: "streamGameAndViewers" });
             const description = createUI("li", { class: "streamDescription" });
             const user = createUI("li", { class: "streamUser" });
-            const streamUrl = `https://www.twitch.tv/${streamUser}`
-            const linkStream = createUI("a", {class: "link", href: streamUrl, rel: streamUrl+ '/embed', target: "_blank"})
-            
+            const streamUrl = `https://www.twitch.tv/${streamUser}`;
+            const linkStream = createUI("a", {
+                class: "link",
+                href: streamUrl,
+                rel: streamUrl + "/embed",
+                target: "_blank",
+            });
+
             titleHeader.innerText = streamTitle;
             info.innerText = streamGameAndViewers;
             user.innerText = streamUser;
@@ -119,8 +126,8 @@ async function fetchGameStreams() {
             imageContainer.appendChild(thumbnail);
             containerDiv.appendChild(imageContainer);
             containerDiv.appendChild(streamDetails);
-            
-            resultList.appendChild(linkStream)
+
+            resultList.appendChild(linkStream);
         });
     });
 }
