@@ -1,0 +1,52 @@
+html {
+  min-height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: "Nunito", "arial", sans-serif;
+  background-image: url(../src/assets/PS.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #f6f6f6;
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  font-size: 16px;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.streams {
+  display: flex;
+}
+
+.streamContainer {
+  display: flex;
+  margin: 15px 0px 0px 0px;
+  border: 6px outset #0072ce;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-shadow: 15px 10px 10px rgba(0, 0, 0, 0.4);
+  background-image: url(../src/assets/Galaxy.jpg);
+  background-size: auto;
+  background-repeat: no-repeat;
+}
+
+.streamContainer:hover {
+    text-decoration: #FDFEFE;
+    border: 6px outset #FDFEFE;
+    box-shadow: 15px 10px 10px rgba(0,0,0,0.4);
+  }
+
+.imageContainer {
+  flex-flow: column wrap;
+  margin: 7px 0px 0px -20px;
+}
+
+.streamDetails {
+    flex-flow: column wrap;
+    margin: 0px 5px 0px -20px;
+  }
