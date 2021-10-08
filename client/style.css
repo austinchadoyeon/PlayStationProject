@@ -5,10 +5,6 @@ html {
 
 body {
   font-family: "Nunito", "arial", sans-serif;
-  background-image: url(../src/assets/PS.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-color: #f6f6f6;
   margin: 0;
   padding: 0;
   min-height: 100%;
@@ -19,34 +15,35 @@ ul {
   list-style-type: none;
 }
 
-.streams {
-  display: flex;
+.streams{
+    position: relative;
 }
 
 .streamContainer {
   display: flex;
-  margin: 15px 0px 0px 0px;
-  border: 6px outset #0072ce;
+  margin: auto;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  width: 70%;
+  border: 2px solid black;
   overflow: hidden;
   text-overflow: ellipsis;
-  box-shadow: 15px 10px 10px rgba(0, 0, 0, 0.4);
-  background-image: url(../src/assets/Galaxy.jpg);
-  background-size: auto;
-  background-repeat: no-repeat;
 }
-
-.streamContainer:hover {
-    text-decoration: #FDFEFE;
-    border: 6px outset #FDFEFE;
-    box-shadow: 15px 10px 10px rgba(0,0,0,0.4);
-  }
 
 .imageContainer {
   flex-flow: column wrap;
-  margin: 7px 0px 0px -20px;
 }
 
 .streamDetails {
-    flex-flow: column wrap;
-    margin: 0px 5px 0px -20px;
-  }
+  flex-flow: column wrap;
+}
+
+.streamTitle {
+    font-weight: bolder;
+    font-size: 20px;
+    margin: 5px 5px 10px 5px;
+}
+
+.streamDetails {
+    margin: 5px 15px 10px 15px;
+}
