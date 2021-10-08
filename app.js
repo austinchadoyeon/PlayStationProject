@@ -66,7 +66,7 @@ async function getGameID(gameName) {
 async function fetchGameStreams(id = "", next="", prev="") {
     if (id !== "") url = `https://api.twitch.tv/helix/streams?game_id=${id}`;
     if (next !== "") url = `https://api.twitch.tv/helix/streams?first=20&after=${next}`
-    if (prev !== "") url = `https://api.twitch.tv/helix/streams?first=20&before=${next}`
+    if (prev !== "") url = `https://api.twitch.tv/helix/streams?first=20&before=${prev}`
     const apiResponse = await fetch(url, {
         headers: {
             Authorization: "Bearer 49yr7fhslyosgay4x5qp5vrowbnw5w",
