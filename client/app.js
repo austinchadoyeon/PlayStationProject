@@ -69,6 +69,7 @@ async function fetchGameStreams(id = "") {
 
             const imageContainer = createUI("ul", { class: "imageContainer" });
             const thumbnail = createUI("img");
+            
             thumbnail.src = streamImg;
 
             const containerDiv = createUI("div", { class: "streamContainer" });
@@ -77,6 +78,9 @@ async function fetchGameStreams(id = "") {
             const info = createUI("li", { class: "streamGameAndViewers" });
             const description = createUI("li", { class: "streamDescription" });
             const user = createUI("li", { class: "streamUser" });
+            const streamUrl = `https://www.twitch.tv/${streamUser}`
+            const linkStream = createUI("a", {class: "link", href: streamUrl, rel: streamUrl+ '/embed'})
+            console.log(linkStream);
             titleHeader.innerText = streamTitle;
             info.innerText = streamGameAndViewers;
             user.innerText = streamUser;
@@ -87,11 +91,12 @@ async function fetchGameStreams(id = "") {
             streamDetails.appendChild(user);
             streamDetails.appendChild(description);
 
+            linkStream.appendChild(containerDiv);
             imageContainer.appendChild(thumbnail);
             containerDiv.appendChild(imageContainer);
             containerDiv.appendChild(streamDetails);
-
-            resultList.append(containerDiv);
+            
+            resultList.appendChild(linkStream)
         });
     });
 }

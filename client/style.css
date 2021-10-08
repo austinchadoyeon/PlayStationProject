@@ -15,8 +15,27 @@ ul {
   list-style-type: none;
 }
 
-.streams{
-    position: relative;
+.header {
+   text-align: center;
+}
+
+.searchForm {
+    text-align: center;
+}
+
+.searchInput {
+    width: 500px;
+    height: 20px;
+}
+
+.searchButton {
+    height: 23px;
+}
+
+
+.link {
+    text-decoration: none;
+    color: black;
 }
 
 .streamContainer {
@@ -46,4 +65,22 @@ ul {
 
 .streamDetails {
     margin: 5px 15px 10px 15px;
+}
+
+.streamUser {
+    color: gray;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.streamDescription {
+    margin-top: 10px;
+    border: solid red;
+    width: 25px;
+    background-color: red;
+    color: white;
+}
+
+.footer {
+    text-align: center;
 }
