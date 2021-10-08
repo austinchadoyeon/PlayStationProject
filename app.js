@@ -17,20 +17,22 @@ function handleSubmit(e) {
     document.querySelectorAll(".streamContainer").forEach(e => e.remove());
     const gameName = document.querySelector(".searchInput").value;
     getGameID(gameName).then(result => {
-        fetchGameStreams(result.data[0].id);
+        gameID = result.data[0].id
+        fetchGameStreams(gameID);
     })
+    document.querySelector(".searchInput").value = "";
 }
 
 function getNext(e) {
     e.preventDefault();
     document.querySelectorAll(".streamContainer").forEach(e => e.remove());
-    fetchGameStreams('', cursorPagination);
+    fetchGameStreams(gameID, cursorPagination, "");
 }
 
 function getPrevious(e) {
     e.preventDefault();
     document.querySelectorAll(".streamContainer").forEach(e => e.remove());
-    fetchGameStreams('', '', cursorPagination);
+    fetchGameStreams(gameID, '', cursorPagination);
 }
 
 function cropImage(imageUrl) {
@@ -64,9 +66,11 @@ async function getGameID(gameName) {
 }
 
 async function fetchGameStreams(id = "", next="", prev="") {
-    if (id !== "") url = `https://api.twitch.tv/helix/streams?game_id=${id}`;
-    if (next !== "") url = `https://api.twitch.tv/helix/streams?first=20&after=${next}`
-    if (prev !== "") url = `https://api.twitch.tv/helix/streams?first=20&before=${prev}`
+    if (id !== "" && next !== "") url = `https://api.twitch.tv/helix/streams?game_id=${id}&first=20&after=${next}`;
+    else if (id !== "" && prev !== "") url = `https://api.twitch.tv/helix/streams?game_id=${id}&first=20&before=${prev}`;
+    else if (id !== "") url = `https://api.twitch.tv/helix/streams?game_id=${id}`;
+    else if (next !== "") url = `https://api.twitch.tv/helix/streams?first=20&after=${next}`
+    else if (prev !== "") url = `https://api.twitch.tv/helix/streams?first=20&before=${prev}`
     const apiResponse = await fetch(url, {
         headers: {
             Authorization: "Bearer 49yr7fhslyosgay4x5qp5vrowbnw5w",
