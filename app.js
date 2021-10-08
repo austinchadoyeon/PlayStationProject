@@ -17,7 +17,6 @@ function handleSubmit(e) {
     document.querySelectorAll(".streamContainer").forEach(e => e.remove());
     const gameName = document.querySelector(".searchInput").value;
     getGameID(gameName).then(result => {
-        console.log('result', result.data[0].id);
         fetchGameStreams(result.data[0].id);
     })
 }
@@ -76,7 +75,7 @@ async function fetchGameStreams(id = "", next="", prev="") {
     });
     const streamData = apiResponse.json();
     streamData.then((data) => {
-        console.log(data);
+        
         cursorPagination = data.pagination.cursor;
         data.data.forEach((stream) => {
             const streamTitle = stream.title;
